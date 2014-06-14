@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Droid.Photo</string>
     <string name="btn_search">Search</string>
+    <string name="hint_search_box">Enter Search Term</string>
 </resources>

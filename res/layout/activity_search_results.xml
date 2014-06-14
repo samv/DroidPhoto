@@ -11,6 +11,7 @@
      android:layout_alignParentTop="true"
      android:layout_alignParentLeft="true"
      android:layout_toLeftOf="@+id/btnSearch"
+     android:hint="@string/hint_search_box"
      />
   <Button
      android:id="@+id/btnSearch"
