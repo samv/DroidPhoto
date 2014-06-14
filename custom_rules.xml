@@ -22,6 +22,12 @@
             location="ext/scribe-java/target" />
   <property name="ext.scribe.version" value="1.3.7" />
 
+  <property name="ext.jackson.version" value="2.4.0" />
+  <property name="ext.jackson.core.build.dir"
+            location="ext/jackson-core/target" />
+  <property name="ext.jackson.databind.build.dir"
+            location="ext/jackson-databind/target" />
+
   <target name="-pre-compile">
      <copy file="${ext.asynchttp.rel.dir}/android-async-http-${ext.asynchttp.rel.version}.jar"
            todir="libs/"/>
@@ -34,6 +40,10 @@
      <copy file="${ext.commons.lang.build.dir}/commons-lang3-${ext.commons.lang.version}.jar"
            todir="libs/"/>
      <copy file="${ext.scribe.build.dir}/scribe-${ext.scribe.version}.jar"
+           todir="libs/"/>
+     <copy file="${ext.jackson.core.build.dir}/jackson-core-${ext.jackson.version}-sources.jar"
+           todir="libs/"/>
+     <copy file="${ext.jackson.databind.build.dir}/jackson-databind-${ext.jackson.version}-sources.jar"
            todir="libs/"/>
   </target>
 </project>

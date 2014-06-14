@@ -17,3 +17,12 @@
 [submodule "ext/android-universal-image-loader"]
 	path = ext/android-universal-image-loader
 	url = https://github.com/nostra13/Android-Universal-Image-Loader
+[submodule "ext/jackson"]
+	path = ext/jackson
+	url = https://github.com/FasterXML/jackson
+[submodule "ext/jackson-core"]
+	path = ext/jackson-core
+	url = https://github.com/FasterXML/jackson-core
+[submodule "ext/jackson-databind"]
+	path = ext/jackson-databind
+	url = https://github.com/FasterXML/jackson-databind
