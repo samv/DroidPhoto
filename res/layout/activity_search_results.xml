@@ -20,5 +20,13 @@
      android:layout_alignParentRight="true"
      android:text="@string/btn_search"
      />
+  <GridView
+     android:id="@+id/gvSearchResults"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_below="@id/etSearchString"
+     android:layout_alignParentLeft="true"
+     android:layout_alignParentRight="true"
+     />
 </RelativeLayout>
 
