@@ -8,8 +8,8 @@ import android.widget.GridView;
 
 public class SearchResultsActivity extends Activity
 {
-    EditText etQuery;
-    GridView gvResults;
+    EditText etSearchString;
+    GridView gvSearchResults;
     Button btnSearch;
 
     /** Called when the activity is first created. */
@@ -18,5 +18,13 @@ public class SearchResultsActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        setupViews();
+    }
+
+    private void setupViews()
+    {
+        etSearchString = (EditText) findViewById(R.id.etSearchString);
+        gvSearchResults = (GridView) findViewById(R.id.gvSearchResults);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
     }
 }
