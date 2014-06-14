@@ -1,0 +1,6 @@
+[submodule "ext/android-smart-image-view"]
+	path = ext/android-smart-image-view
+	url = git@github.com:loopj/android-smart-image-view
+[submodule "ext/android-async-http"]
+	path = ext/android-async-http
+	url = git@github.com:loopj/android-async-http

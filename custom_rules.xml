@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TipJarNinjaTest">
+  <property name="ext.asynchttp.rel.dir"
+            location="ext/android-async-http/releases" />
+  <property name="ext.asynchttp.rel.version" value="1.4.3" />
+  <property name="ext.siv.proj.dir"
+            location="ext/android-smart-image-view" />
+  <property name="ext.siv.rel.version" value="1.0.0" />
+
+  <target name="-pre-compile">
+     <copy file="${ext.asynchttp.rel.dir}/android-async-http-${ext.asynchttp.rel.version}.jar"
+           todir="libs/"/>
+     <copy file="${ext.siv.proj.dir}/android-smart-image-view-${ext.siv.rel.version}.jar"
+           todir="libs/"/>
+  </target>
+</project>
