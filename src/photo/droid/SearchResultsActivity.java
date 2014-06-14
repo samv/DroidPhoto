@@ -2,9 +2,11 @@ package photo.droid;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 public class SearchResultsActivity extends Activity
 {
@@ -26,5 +28,12 @@ public class SearchResultsActivity extends Activity
         etSearchString = (EditText) findViewById(R.id.etSearchString);
         gvSearchResults = (GridView) findViewById(R.id.gvSearchResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
+    }
+
+    public void onImageSearch(View v) {
+        String query = etSearchString.getText().toString();
+        Toast.makeText
+            (this, "Searching for " + query, Toast.LENGTH_LONG)
+            .show();
     }
 }
