@@ -12,7 +12,9 @@
      android:layout_alignParentLeft="true"
      android:layout_toLeftOf="@+id/btnSearch"
      android:hint="@string/hint_search_box"
-     />
+     >
+    <requestFocus/>
+  </EditText>
   <Button
      android:id="@+id/btnSearch"
      android:layout_width="wrap_content"
