@@ -4,3 +4,15 @@
 [submodule "ext/android-async-http"]
 	path = ext/android-async-http
 	url = git@github.com:loopj/android-async-http
+[submodule "ext/commons-io"]
+	path = ext/commons-io
+	url = git@github.com:apache/commons-io
+[submodule "ext/commons-lang"]
+	path = ext/commons-lang
+	url = git@github.com:apache/commons-lang
+[submodule "ext/scribe-java"]
+	path = ext/scribe-java
+	url = https://github.com/fernandezpablo85/scribe-java
+[submodule "ext/android-universal-image-loader"]
+	path = ext/android-universal-image-loader
+	url = https://github.com/nostra13/Android-Universal-Image-Loader
