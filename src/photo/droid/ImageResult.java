@@ -3,9 +3,7 @@ package photo.droid;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ImageResult {
     private String fullUrl;
