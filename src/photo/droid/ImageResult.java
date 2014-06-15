@@ -2,10 +2,11 @@
 package photo.droid;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ImageResult {
+public class ImageResult implements Serializable {
     private String fullUrl;
     private String thumbUrl;
 

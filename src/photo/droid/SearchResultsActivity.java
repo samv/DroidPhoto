@@ -53,7 +53,7 @@ public class SearchResultsActivity extends Activity
                         Intent i = new Intent
                             (getApplicationContext(), ImageDisplayActivity.class);
                         ImageResult imageResult = imageResults.get(position);
-                        i.putExtra("url", imageResult.getFullUrl());
+                        i.putExtra("result", imageResult);
                         startActivity(i);
                     }
              });
