@@ -61,6 +61,7 @@ public class SearchResultsActivity extends Activity
                         (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                     ImageSearchRS response = jackson.readValue
                         (responseBody, ImageSearchRS.class);
+                    imageResults.clear();
                     imageResults.addAll(response.getData().results);
                 }
             };
