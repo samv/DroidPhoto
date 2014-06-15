@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -19,6 +22,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.apache.http.Header;
 
+import photo.droid.ImageDisplayActivity;
 import photo.droid.ImageResult;
 import photo.droid.ImageResultArrayAdapter;
 import photo.droid.ImageSearchRS;
@@ -41,6 +45,18 @@ public class SearchResultsActivity extends Activity
         setupViews();
         imageAdapter = new ImageResultArrayAdapter(this, imageResults);
         gvSearchResults.setAdapter(imageAdapter);
+        gvSearchResults.setOnItemClickListener
+            (new AdapterView.OnItemClickListener() {
+                    @Override public void onItemClick
+                        (AdapterView<?> adapter, View parent, int position,
+                         long rowid) {
+                        Intent i = new Intent
+                            (getApplicationContext(), ImageDisplayActivity.class);
+                        ImageResult imageResult = imageResults.get(position);
+                        i.putExtra("url", imageResult.getFullUrl());
+                        startActivity(i);
+                    }
+             });
     }
 
     private void setupViews()
