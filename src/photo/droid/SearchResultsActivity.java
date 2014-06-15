@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+
 import photo.droid.ImageResult;
 
 public class SearchResultsActivity extends Activity
@@ -41,5 +43,6 @@ public class SearchResultsActivity extends Activity
         Toast.makeText
             (this, "Searching for " + query, Toast.LENGTH_LONG)
             .show();
+        AsyncHttpClient client = new AsyncHttpClient();
     }
 }
