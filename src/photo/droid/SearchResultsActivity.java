@@ -20,6 +20,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.apache.http.Header;
 
 import photo.droid.ImageResult;
+import photo.droid.ImageResultArrayAdapter;
 import photo.droid.ImageSearchRS;
 
 public class SearchResultsActivity extends Activity
@@ -29,6 +30,7 @@ public class SearchResultsActivity extends Activity
     Button btnSearch;
 
     ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
+    ImageResultArrayAdapter imageAdapter;
 
     /** Called when the activity is first created. */
     @Override
@@ -37,7 +39,8 @@ public class SearchResultsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         setupViews();
-        imageResults = new ArrayList<ImageResult>();
+        imageAdapter = new ImageResultArrayAdapter(this, imageResults);
+        gvSearchResults.setAdapter(imageAdapter);
     }
 
     private void setupViews()
@@ -73,11 +76,12 @@ public class SearchResultsActivity extends Activity
                         ImageSearchRS response = jackson.readValue
                             (responseBody, ImageSearchRS.class);
                         imageResults.clear();
-                        imageResults.addAll(response.getData().results);
+                        imageAdapter.addAll(response.getData().results);
+                        //imageAdapter.notify();
                     }
                     catch (IOException e) {
                     }
-                    Log.d("DEBUG", imageResults.toString());
+                    Log.d("DEBUG", "results are now: " + imageResults.toString());
                 }
 
                 @Override
