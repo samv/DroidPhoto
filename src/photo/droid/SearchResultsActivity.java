@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,17 +53,37 @@ public class SearchResultsActivity extends Activity
             (this, "Searching for " + query, Toast.LENGTH_LONG)
             .show();
         AsyncHttpClient client = new AsyncHttpClient();
+        Log.d("DEBUG", "Searching for " + query);
+
+        final Toast successToast = Toast.makeText
+            (this, "Succeed!", Toast.LENGTH_LONG);
+        final Toast failureToast = Toast.makeText
+            (this, "FAIL!", Toast.LENGTH_LONG);
 
         AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) throws IOException {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
+                    successToast.show();
                     ObjectMapper jackson = new ObjectMapper();
                     jackson.configure
                         (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                    ImageSearchRS response = jackson.readValue
-                        (responseBody, ImageSearchRS.class);
-                    imageResults.clear();
-                    imageResults.addAll(response.getData().results);
+                    Log.d("DEBUG", "Got response: " + responseBody);
+                    try {
+                        ImageSearchRS response = jackson.readValue
+                            (responseBody, ImageSearchRS.class);
+                        imageResults.clear();
+                        imageResults.addAll(response.getData().results);
+                    }
+                    catch (IOException e) {
+                    }
+                    Log.d("DEBUG", imageResults.toString());
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
+                {
+                    failureToast.show();
                 }
             };
 

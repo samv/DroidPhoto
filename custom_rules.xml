@@ -26,8 +26,10 @@
             location="ext/jackson-databind/target" />
 
   <target name="-pre-compile">
+    <!--
      <copy file="${ext.asynchttp.rel.dir}/android-async-http-${ext.asynchttp.rel.version}.jar"
            todir="libs/"/>
+     -->
      <copy file="${ext.uil.rel.dir}/universal-image-loader-${ext.uil.rel.version}.jar"
            todir="libs/"/>
      <copy file="${ext.siv.proj.dir}/android-smart-image-view-${ext.siv.rel.version}.jar"
