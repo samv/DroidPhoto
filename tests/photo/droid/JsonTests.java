@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import photo.droid.ImageResult;
+import photo.droid.ImageSearchRS;
 import photo.droid.ImageSearchRSData;
 
 public class JsonTests {
@@ -39,6 +40,13 @@ public class JsonTests {
              ImageSearchRSData.class);
 
         assertEquals(4, results.results.size());
+
+        ImageSearchRS response = mapper.readValue
+            (new File(FIXT_DIR + "rs_image_search.json"),
+             ImageSearchRS.class);
+
+        assertEquals(200, response.getStatus());
+        assertEquals(4, response.getData().results.size());
     }
 
     @Test
