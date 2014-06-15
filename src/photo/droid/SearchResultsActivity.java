@@ -1,5 +1,7 @@
 package photo.droid;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +10,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import photo.droid.ImageResult;
+
 public class SearchResultsActivity extends Activity
 {
     EditText etSearchString;
     GridView gvSearchResults;
     Button btnSearch;
+
+    ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 
     /** Called when the activity is first created. */
     @Override
