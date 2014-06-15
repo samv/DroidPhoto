@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import photo.droid.ImageResult;
+import photo.droid.ImageSearchRSData;
 
 public class JsonTests {
     ObjectMapper mapper;
@@ -32,6 +33,12 @@ public class JsonTests {
 
         assertEquals(ir.getFullUrl(), "http://davidfeldmanshow.com/wp-content/uploads/2014/01/dogs-wallpaper.jpg");
         assertEquals(ir.getThumbUrl(), "http://t2.gstatic.com/images?q\u003dtbn:ANd9GcSMs-8bRX-7jTqcQauH1Md1uKIHNqXRXsnrdKUEyDBZ6XHNvSfuIeYTB9IP");
+
+        ImageSearchRSData results = mapper.readValue
+            (new File(FIXT_DIR + "rs_image_search_data.json"),
+             ImageSearchRSData.class);
+
+        assertEquals(4, results.results.size());
     }
 
     @Test
