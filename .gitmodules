@@ -26,3 +26,9 @@
 [submodule "ext/jackson-databind"]
 	path = ext/jackson-databind
 	url = https://github.com/FasterXML/jackson-databind
+[submodule "ext/JSONassert"]
+	path = ext/JSONassert
+	url = https://github.com/skyscreamer/JSONassert
+[submodule "ext/org.json-java"]
+	path = ext/org.json-java
+	url = https://github.com/eskatos/org.json-java

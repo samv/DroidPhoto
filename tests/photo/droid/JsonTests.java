@@ -7,9 +7,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import photo.droid.ImageResult;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.skyscreamer.jsonassert.JSONAssert;
+
+import photo.droid.ImageResult;
 
 public class JsonTests {
     ObjectMapper mapper;
@@ -29,5 +32,15 @@ public class JsonTests {
 
         assertEquals(ir.getFullUrl(), "http://davidfeldmanshow.com/wp-content/uploads/2014/01/dogs-wallpaper.jpg");
         assertEquals(ir.getThumbUrl(), "http://t2.gstatic.com/images?q\u003dtbn:ANd9GcSMs-8bRX-7jTqcQauH1Md1uKIHNqXRXsnrdKUEyDBZ6XHNvSfuIeYTB9IP");
+    }
+
+    @Test
+    public void testWriteValue() throws JsonProcessingException {
+        ImageResult ir = new ImageResult("http://cat.jpg.to/", "http://cat.jpg.to/icon+png");
+        String json = mapper.writeValueAsString(ir);
+        JSONAssert.assertEquals
+            ("{\"url\":\"http://cat.jpg.to/\", " +
+             "\"tbUrl\": \"http://cat.jpg.to/icon+png\"},",
+             json, false);
     }
 }
