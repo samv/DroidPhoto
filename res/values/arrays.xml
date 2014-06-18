@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="image_sizes">
+      <item>Any</item>   
+      <item>Small</item>
+      <item>Medium</item>
+      <item>Large</item>
+      <item>Extra Large</item>
+    </string-array>
+
+    <string-array name="image_rights">
+      <item>Any/Unknown</item>   
+      <item>Public Domain</item>   
+      <item>Attribution Required</item>   
+      <item>"Share &amp; Share Alike"</item>   
+      <item>No Derivative Works</item>   
+      <item>No Commercial Use</item>   
+      <item>No Comm. Use or Deriv.</item>   
+    </string-array>
+
+    <string-array name="image_colors">
+      <item>Any</item>   
+      <item>Black</item>
+      <item>Blue</item>
+      <item>Brown</item>
+      <item>Gray</item>
+      <item>Green</item>
+      <item>Orange</item>
+      <item>Pink</item>
+      <item>Purple</item>
+      <item>Red</item>
+      <item>Teal</item>
+      <item>White</item>
+      <item>Yellow</item>
+    </string-array>
+
+    <string-array name="image_types">
+      <item>Any</item>   
+      <item>Faces</item>
+      <item>Photos</item>
+      <item>Clipart</item>
+      <item>Line Drawings</item>
+    </string-array>
+
+</resources>

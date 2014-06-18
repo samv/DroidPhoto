@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,13 +27,18 @@ import org.apache.http.Header;
 import photo.droid.ImageDisplayActivity;
 import photo.droid.ImageResult;
 import photo.droid.ImageResultArrayAdapter;
+import photo.droid.ImageSearchOptions;
 import photo.droid.ImageSearchRS;
+import photo.droid.SearchOptionsActivity;
 
 public class SearchResultsActivity extends Activity
+    implements MenuItem.OnMenuItemClickListener
 {
     EditText etSearchString;
     GridView gvSearchResults;
     Button btnSearch;
+
+    ImageSearchOptions options = new ImageSearchOptions();
 
     ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
     ImageResultArrayAdapter imageAdapter;
@@ -87,7 +94,7 @@ public class SearchResultsActivity extends Activity
                     ObjectMapper jackson = new ObjectMapper();
                     jackson.configure
                         (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                    Log.d("DEBUG", "Got response: " + responseBody);
+                    //Log.d("DEBUG", "Got response: " + new String(responseBody));
                     try {
                         ImageSearchRS response = jackson.readValue
                             (responseBody, ImageSearchRS.class);
@@ -97,7 +104,7 @@ public class SearchResultsActivity extends Activity
                     }
                     catch (IOException e) {
                     }
-                    Log.d("DEBUG", "results are now: " + imageResults.toString());
+                    //Log.d("DEBUG", "results are now: " + imageResults.toString());
                 }
 
                 @Override
@@ -107,9 +114,42 @@ public class SearchResultsActivity extends Activity
                 }
             };
 
-        client.get
-            ("https://ajax.googleapis.com/ajax/services/search/images?" +
-             "rsz=8&start=" + 0 + "&v=1.0&q=" + Uri.encode(query),
-             handler);
+        String uri = options.uri(0, query).toString();
+        Log.d("DEBUG", "uri is " + uri);
+
+        client.get(uri, handler);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.miSettings);
+        item.setOnMenuItemClickListener(this);
+        return true;
+    }
+
+    private final int REQUEST_OPTIONS = 42;
+
+    public boolean onMenuItemClick(MenuItem mi) {
+        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, SearchOptionsActivity.class);
+        i.putExtra("options", options);
+        Log.d("DEBUG", "sent size " + options.imageSize);
+        startActivityForResult(i, REQUEST_OPTIONS);
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_OPTIONS) {
+            Log.d("DEBUG", "Updating options");
+            options = (ImageSearchOptions)
+                data.getSerializableExtra("options");
+            Log.d("DEBUG", "received size " + options.imageSize);
+        }
+    } 
 }

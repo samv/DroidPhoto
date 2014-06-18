@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Droid.Photo</string>
-    <string name="title_image_display">Display Image</string>
+
     <string name="btn_search">Search</string>
     <string name="hint_search_box">Enter Search Term</string>
+
+    <string name="title_image_display">Display Image</string>
+
+    <string name="title_search_options">Image Search Options</string>
+
+    <string name="label_image_size">Image Size</string>
+    <string name="label_image_rights">Image Rights</string>
+    <string name="label_image_color">Dominant Color</string>
+    <string name="label_image_type">Image Type</string>
+
+    <string name="button_save">Save Options</string>
+
 </resources>
