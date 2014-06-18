@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import photo.droid.ImageResult;
+import photo.droid.ImageSearchRSCursor;
 
 public class ImageSearchRSData {
 
     public ArrayList<ImageResult> results;
+    public ImageSearchRSCursor result_cursor;
 
     public ImageSearchRSData() {
         results = new ArrayList<ImageResult>();
