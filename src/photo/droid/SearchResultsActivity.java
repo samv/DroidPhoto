@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Button;
@@ -33,15 +34,18 @@ import photo.droid.SearchOptionsActivity;
 
 public class SearchResultsActivity extends Activity
     implements MenuItem.OnMenuItemClickListener
+    implements AbsListView.OnScrollListener
 {
     EditText etSearchString;
     GridView gvSearchResults;
     Button btnSearch;
 
     ImageSearchOptions options = new ImageSearchOptions();
+    String query = "";
 
     ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
     ImageResultArrayAdapter imageAdapter;
+    int lastImageVisible = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -74,7 +78,7 @@ public class SearchResultsActivity extends Activity
     }
 
     public void onImageSearch(View v) {
-        String query = etSearchString.getText().toString();
+        query = etSearchString.getText().toString();
         Toast.makeText
             (this, "Searching for " + query, Toast.LENGTH_LONG)
             .show();
@@ -87,9 +91,8 @@ public class SearchResultsActivity extends Activity
             (this, "FAIL!", Toast.LENGTH_LONG);
 
         AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                public void onSuccess
+                    (int statusCode, Header[] headers, byte[] responseBody) {
                     successToast.show();
                     ObjectMapper jackson = new ObjectMapper();
                     jackson.configure
@@ -120,6 +123,10 @@ public class SearchResultsActivity extends Activity
         client.get(uri, handler);
     }
 
+    private void setLastImage(int pos) {
+        lastImageVisible = pos;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,8 +149,8 @@ public class SearchResultsActivity extends Activity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
-
+                                    Intent data)
+    {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_OPTIONS) {
             Log.d("DEBUG", "Updating options");
@@ -152,4 +159,13 @@ public class SearchResultsActivity extends Activity
             Log.d("DEBUG", "received size " + options.imageSize);
         }
     } 
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem,
+                         int visibleItemCount, int totalItemCount)
+    {
+        if (lastImageVisible < totalItemCount) {
+            setLastImage(totalItemCount);
+        }
+    }
 }
