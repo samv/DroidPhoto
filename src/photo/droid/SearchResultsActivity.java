@@ -34,7 +34,6 @@ import photo.droid.SearchOptionsActivity;
 
 public class SearchResultsActivity extends Activity
     implements MenuItem.OnMenuItemClickListener
-    implements AbsListView.OnScrollListener
 {
     EditText etSearchString;
     GridView gvSearchResults;
@@ -160,12 +159,4 @@ public class SearchResultsActivity extends Activity
         }
     } 
 
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount)
-    {
-        if (lastImageVisible < totalItemCount) {
-            setLastImage(totalItemCount);
-        }
-    }
 }
