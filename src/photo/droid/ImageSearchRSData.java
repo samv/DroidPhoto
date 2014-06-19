@@ -11,7 +11,7 @@ import photo.droid.ImageSearchRSCursor;
 public class ImageSearchRSData {
 
     public ArrayList<ImageResult> results;
-    public ImageSearchRSCursor result_cursor;
+    public ImageSearchRSCursor cursor;
 
     public ImageSearchRSData() {
         results = new ArrayList<ImageResult>();

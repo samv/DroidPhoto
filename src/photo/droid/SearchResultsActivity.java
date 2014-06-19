@@ -44,7 +44,11 @@ public class SearchResultsActivity extends Activity
 
     ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
     ImageResultArrayAdapter imageAdapter;
+
     int lastImageVisible = 0;
+    int nextPage = 0;
+    AsyncHttpClient client;
+    ResponseCallback handler;
 
     /** Called when the activity is first created. */
     @Override
@@ -77,53 +81,96 @@ public class SearchResultsActivity extends Activity
     }
 
     public void onImageSearch(View v) {
-        query = etSearchString.getText().toString();
+        String q = etSearchString.getText().toString();
+        query = q;
+        imageAdapter.clear();
+        lastImageVisible = 0;
+        nextPage = 0;
         Toast.makeText
-            (this, "Searching for " + query, Toast.LENGTH_LONG)
+            (this, "Searching for " + q, Toast.LENGTH_LONG)
             .show();
-        AsyncHttpClient client = new AsyncHttpClient();
-        Log.d("DEBUG", "Searching for " + query);
+        client = new AsyncHttpClient();
+        Log.d("DEBUG", "Searching for " + q);
 
-        final Toast successToast = Toast.makeText
-            (this, "Succeed!", Toast.LENGTH_LONG);
-        final Toast failureToast = Toast.makeText
-            (this, "FAIL!", Toast.LENGTH_LONG);
-
-        AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
-                public void onSuccess
-                    (int statusCode, Header[] headers, byte[] responseBody) {
-                    successToast.show();
-                    ObjectMapper jackson = new ObjectMapper();
-                    jackson.configure
-                        (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                    //Log.d("DEBUG", "Got response: " + new String(responseBody));
-                    try {
-                        ImageSearchRS response = jackson.readValue
-                            (responseBody, ImageSearchRS.class);
-                        imageResults.clear();
-                        imageAdapter.addAll(response.getData().results);
-                        //imageAdapter.notify();
-                    }
-                    catch (IOException e) {
-                    }
-                    //Log.d("DEBUG", "results are now: " + imageResults.toString());
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
-                {
-                    failureToast.show();
-                }
-            };
-
-        String uri = options.uri(0, query).toString();
+        String uri = options.uri(0, q).toString();
+        handler = new ResponseCallback(q, 0, uri);
         Log.d("DEBUG", "uri is " + uri);
-
         client.get(uri, handler);
     }
 
-    private void setLastImage(int pos) {
-        lastImageVisible = pos;
+   private class ResponseCallback extends AsyncHttpResponseHandler {
+       private String _query;
+       private int _startidx;
+       private String _uri;
+       public ResponseCallback(String query, int start, String uri) {
+           _query = query;
+           recycle(start, uri);
+       }
+
+       public void recycle(int start, String uri) {
+           _startidx = start;
+           _uri = uri;
+       }
+
+       @Override
+       public void onSuccess
+           (int statusCode, Header[] headers, byte[] responseBody) {
+           if (query != _query)
+               return;
+
+           ObjectMapper jackson = new ObjectMapper();
+           jackson.configure
+               (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+           try {
+               ImageSearchRS response = jackson.readValue
+                   (responseBody, ImageSearchRS.class);
+
+               imageAdapter.addAll(response.getData().results);
+               lastImageVisible = gvSearchResults.getLastVisiblePosition();
+               nextPage = response.getData().cursor.next_start();
+               Log.d("DEBUG", "Next page starts at " + nextPage + 
+                     ", last Image Visible = " + lastImageVisible +
+                     ", images in adapter = " + imageAdapter.getCount());
+
+               if (((lastImageVisible + 6) > imageAdapter.getCount()) ||
+                   ((lastImageVisible == -1) && (imageAdapter.getCount() < 32))
+                   ) {
+                   getNextPage();
+               }
+               else {
+                   Log.d("DEBUG", "All done!  lastImageVisible = " +
+                         lastImageVisible + ", imageAdapter.getCount() = " +
+                         imageAdapter.getCount());
+               }
+           }
+           catch (IOException e) {
+               Log.d("DEBUG", "Caught IOException :-(");
+           }
+       }
+        
+       @Override
+       public void onFailure(int statusCode, Header[] headers,
+                             byte[] responseBody, Throwable error)
+       {
+           showMessage("Failed to load " + _uri);
+       }
+    }
+
+    private void showMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+    
+    private void getNextPage() {
+        if (nextPage > 0) {
+            String uri = options.uri(nextPage, query).toString();
+            handler.recycle(nextPage, query);
+            Log.d("DEBUG", "uri is " + uri);
+            client.get(uri, handler);
+        }
+        else {
+            Log.d("DEBUG", "End of results!");
+        }
     }
 
     @Override

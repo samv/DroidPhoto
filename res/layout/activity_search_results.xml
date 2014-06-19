@@ -31,7 +31,7 @@
      android:layout_alignParentLeft="true"
      android:layout_alignParentRight="true"
      android:columnWidth="75dp"
-     android:numColumns="auto_fit"
+     android:numColumns="3"
      android:gravity="center"
      android:stretchMode="columnWidth"
      />
