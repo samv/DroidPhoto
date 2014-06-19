@@ -1,8 +1,8 @@
 # Droid Photo
 
 Droid Photo is an application that lets you access google image
-search.  Currently, it only views 4 images at a time.  But, it does
-allow access to some advanced search settings.
+search.  It will show up to 64 images for each search, and allows
+selection of a handful of Google Image Search options.
 
 ![Walk-through](screenshots/demo.gif)
 
@@ -13,7 +13,7 @@ GNU Lesser General Public License for more details.
 
 ## Project Statistics
 
-So far, approximately 15 hours of development time has been spent on
+So far, approximately 18 hours of development time has been spent on
 this application.
 
 ## Author and License
