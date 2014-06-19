@@ -13,6 +13,7 @@
     <string name="label_image_rights">Image Rights</string>
     <string name="label_image_color">Dominant Color</string>
     <string name="label_image_type">Image Type</string>
+    <string name="label_site">Site</string>
 
     <string name="button_save">Save Options</string>
 

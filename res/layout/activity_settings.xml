@@ -88,7 +88,7 @@
      android:id="@+id/tvSiteLabel"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:text="@string/label_image_color"
+     android:text="@string/label_site"
      android:layout_below="@id/tvImageTypeLabel"
      android:layout_alignParentLeft="true"
      android:layout_alignBottom="@+id/etSite"

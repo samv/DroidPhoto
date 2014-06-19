@@ -18,13 +18,18 @@ public class ImageSearchOptions implements Serializable {
         ANY, FACE, PHOTO, CLIPART, LINEART,
     }
     public enum IMAGE_RIGHTS {
-        ANY,
-        CC_PUBLICDOMAIN,
-        CC_ATTRIBUTE,
-        CC_SHAREALIKE,
-        CC_NONDERIVED,
-        CC_NONCOMMERCIAL,
-        CC_NC_ND,
+        ANY(""),
+        CC_PUBLICDOMAIN("cc_publicdomain"),
+        CC_ATTRIBUTE("cc_attribute"),
+        CC_SHAREALIKE("cc_sharealike"),
+        CC_NONDERIVED("cc_nonderived"),
+        CC_NONCOMMERCIAL("cc_noncommercial"),
+        CC_NC_ND("cc_noncommercial|cc_nonderived");
+
+        public String as_rights;
+        private IMAGE_RIGHTS(String _api_val) {
+            this.as_rights = _api_val;
+        }
     }
 
     public IMAGE_SIZE imageSize = IMAGE_SIZE.ANY;
@@ -62,6 +67,10 @@ public class ImageSearchOptions implements Serializable {
         if (imageType != IMAGE_TYPE.ANY)
             uriBuilder.appendQueryParameter
                 ("imgtype", imageType.name().toLowerCase());
+
+        if (imageRights != IMAGE_RIGHTS.ANY)
+            uriBuilder.appendQueryParameter
+                ("as_rights", imageRights.as_rights);
 
         if (site.length() > 0)
             uriBuilder.appendQueryParameter("as_sitesearch", site);
