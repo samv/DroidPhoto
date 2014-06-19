@@ -46,6 +46,7 @@ public class ImageSearchOptions implements Serializable {
 
         uriBuilder.appendQueryParameter("q", query);
         uriBuilder.appendQueryParameter("v", "1.0");
+        uriBuilder.appendQueryParameter("rsz", "8");
 
         if (start > 0)
             uriBuilder.appendQueryParameter("start", start + "");

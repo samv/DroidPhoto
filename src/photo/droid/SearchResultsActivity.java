@@ -33,7 +33,8 @@ import photo.droid.ImageSearchRS;
 import photo.droid.SearchOptionsActivity;
 
 public class SearchResultsActivity extends Activity
-    implements MenuItem.OnMenuItemClickListener
+    implements MenuItem.OnMenuItemClickListener,
+               AbsListView.OnScrollListener
 {
     EditText etSearchString;
     GridView gvSearchResults;
@@ -71,6 +72,7 @@ public class SearchResultsActivity extends Activity
                         startActivity(i);
                     }
              });
+        gvSearchResults.setOnScrollListener(this);
     }
 
     private void setupViews()
@@ -102,6 +104,7 @@ public class SearchResultsActivity extends Activity
        private String _query;
        private int _startidx;
        private String _uri;
+       private boolean triggered;
        public ResponseCallback(String query, int start, String uri) {
            _query = query;
            recycle(start, uri);
@@ -110,11 +113,17 @@ public class SearchResultsActivity extends Activity
        public void recycle(int start, String uri) {
            _startidx = start;
            _uri = uri;
+           triggered = false;
+       }
+
+       public boolean active() {
+           return !triggered;
        }
 
        @Override
        public void onSuccess
            (int statusCode, Header[] headers, byte[] responseBody) {
+           triggered = true;
            if (query != _query)
                return;
 
@@ -153,6 +162,7 @@ public class SearchResultsActivity extends Activity
        public void onFailure(int statusCode, Header[] headers,
                              byte[] responseBody, Throwable error)
        {
+           triggered = true;
            showMessage("Failed to load " + _uri);
        }
     }
@@ -163,10 +173,15 @@ public class SearchResultsActivity extends Activity
     
     private void getNextPage() {
         if (nextPage > 0) {
-            String uri = options.uri(nextPage, query).toString();
-            handler.recycle(nextPage, query);
-            Log.d("DEBUG", "uri is " + uri);
-            client.get(uri, handler);
+            if (handler.active()) {
+                Log.d("DEBUG", "request already in progress");
+            }
+            else {
+                String uri = options.uri(nextPage, query).toString();
+                handler.recycle(nextPage, query);
+                Log.d("DEBUG", "uri is " + uri);
+                client.get(uri, handler);
+            }
         }
         else {
             Log.d("DEBUG", "End of results!");
@@ -206,4 +221,23 @@ public class SearchResultsActivity extends Activity
         }
     } 
 
+    public void onScroll(AbsListView view, int firstVisibleItem,
+                         int visibleItemCount, int totalItemCount)
+    {
+        Log.d("DEBUG", "onScroll(" + view + ", " + firstVisibleItem +
+              ", " + visibleItemCount + ", " + totalItemCount + ")");
+        if (firstVisibleItem + visibleItemCount == imageAdapter.getCount()) {
+            Log.d("DEBUG", "let's get some more");
+            getNextPage();
+        }
+        else {
+            Log.d("DEBUG", "We already have " + imageAdapter.getCount() +
+                  " items");
+        }
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        Log.d("DEBUG", "onScrollStateChanged(" + view + ", " +
+              scrollState + ")");
+    }
 }
